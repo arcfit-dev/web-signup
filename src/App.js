@@ -1,3 +1,4 @@
+import logo from './asset/logo.png';
 import { Button, Card, CardContent, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react'
 import { auth } from './firebase';
@@ -27,14 +28,14 @@ const App = () => {
     generateRecaptcha();
     let appVerifier = window.recaptchaVerifier;
     signInWithPhoneNumber(auth, phone, appVerifier)
-      .then((confirmationResult) => {
-        // SMS sent. Prompt user to type the code from the message, then sign the
-        // user in with confirmationResult.confirm(code).
-        window.confirmationResult = confirmationResult;
-      }).catch((error) => {
-        // Error; SMS not sent
-        console.log(error);
-      });
+        .then((confirmationResult) => {
+          // SMS sent. Prompt user to type the code from the message, then sign the
+          // user in with confirmationResult.confirm(code).
+          window.confirmationResult = confirmationResult;
+        }).catch((error) => {
+      // Error; SMS not sent
+      console.log(error);
+    });
   }
 
   const verifyOtp = (event) => {
@@ -57,37 +58,36 @@ const App = () => {
     }
   }
 
-  if(user) {
-    return <MyForm user={user} />
+  if(!user) {
+    return <MyForm user={user || {phoneNumber: "921233212"}} />
   }
 
   return (
       <div className='app__container'>
-        {/*<img*/}
-        {/*    srcSet={`w=164&h=164&fit=crop&auto=format&dpr=2 2x`}*/}
-        {/*    src={``}*/}
-        {/*    alt={item.title}*/}
-        {/*    loading="lazy"*/}
-        {/*/>*/}
-        <Card sx={{width: '300px', background: '#2d2d2d'}}>
-          {!hasFilled ? (<CardContent sx={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
-            <Typography sx={{padding: '20px', color: 'white'}} variant='h5' component='div'>Enter your phone
-              number</Typography>
-            <form onSubmit={handleSend} className={"center"}>
-              <TextField sx={{width: '240px'}} variant='outlined' autoComplete='off' label='Phone Number' focused
-                         value={phone} onChange={(event) => setPhone(event.target.value)}/>
-              <Button type='submit' variant='contained' sx={{width: '240px', marginTop: '20px'}}>Send Code</Button>
-            </form>
-          </CardContent>) : (
-              <CardContent sx={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
-                <Typography sx={{padding: '20px'}} variant='h5' component='div'>Enter the OTP</Typography>
-                <TextField sx={{width: '240px'}} variant='outlined' label='OTP ' value={otp} onChange={verifyOtp}/>
-              </CardContent>
-          )}
-        </Card>
-        <div id="recaptcha"></div>
-      </div>
-  )
-}
+        <img src={logo} alt="Logo" style={{ width: '8rem', marginBottom: '20px' }} /> {/* Add the image here */}
+          <Card sx={{width: '400px', background: '#2d2d2d'}}>
+            {!hasFilled ? (<CardContent sx={{display: 'flex', justifyContent: 'center' , alignItems: 'center', flexDirection: 'column', padding: '20px'}}>
+              <Typography sx={{ paddingBottom: '20px',color: 'white', textAlign: 'center'}} variant='h5' component='div'>Enter your phone
+                number</Typography>
+              <form onSubmit={handleSend} className={"center"}>
+                <TextField sx={{width: '240px', marginLeft: '60px', input: {color: 'white'}}} variant='outlined' autoComplete='off' label='Phone Number' focused
+                           value={phone} onChange={(event) => setPhone(event.target.value)}/>
+                <Button type='submit' variant='contained' sx={{width: '240px', marginTop: '20px',marginLeft: '60px'}}>Send Code</Button>
+              </form>
+            </CardContent>) : (
+                <CardContent sx={{display: 'flex', alignItems: 'center', flexDirection: 'column', padding: '20px'}}>
+                  <Typography sx={{padding: '20px', textAlign: 'center', color: 'white'}} variant='h5' component='div'>Enter the OTP</Typography>
+                  <div className={"center"}>
+                    <TextField sx={{width: '240px'}} focused variant='outlined' label='OTP ' value={otp} onChange={verifyOtp}/>
+                    {/*<TextField sx={{width: '240px', marginLeft: '60px', input: {color: 'white'}}} variant='outlined' label='OTP ' onChange={} value={otp}/>*/}
+                    {/*<Button type='submit' variant='contained' sx={{width: '240px', marginTop: '20px',marginLeft: '60px'}}>Verify Code</Button>*/}
+                  </div>
+                </CardContent>
+            )}
+          </Card>
+          <div id="recaptcha"></div>
+          </div>
+          )
+        }
 
 export default App;
