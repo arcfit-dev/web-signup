@@ -58,8 +58,8 @@ const App = () => {
     }
   }
 
-  if(!user) {
-    return <MyForm user={user || {phoneNumber: "921233212"}} />
+  if(user) {
+    return <MyForm user={user} />
   }
 
   return (
