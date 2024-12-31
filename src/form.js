@@ -3,15 +3,15 @@ import {db} from './firebase';
 import {addDoc, collection, getDocs, query, where} from "firebase/firestore";
 
 
-import {Form, Formik} from "formik";
+import {Formik} from "formik";
 import * as Yup from "yup";
-import {Box, Button, createTheme, FormControlLabel, FormLabel, Radio, RadioGroup, TextField, ThemeProvider} from "@mui/material";
+import {Box, Button, Card, FormControlLabel, FormLabel, Radio, RadioGroup, TextField} from "@mui/material";
 import "./SuccessPage.css";
 import logo from "./asset/logo.png";
 
 const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
-    gender: Yup.boolean().required("Gender is required"),
+    gender: Yup.string().oneOf(['male', 'female', 'other'], "Invalid gender").required("Gender is required"),
     email: Yup.string().email("Invalid email format").required("Email ID is required"),
     age: Yup.number().required("Age is required").min(1, "Age must be at least 1"),
     societyName: Yup.string().required("Society name is required"),
@@ -28,26 +28,6 @@ const checkUserExists = async (phoneNumber) => {
 
     return !querySnapshot.empty;
 };
-
-const darkTheme = createTheme({
-    palette: {
-        mode: "dark",
-        primary: {
-            main: "#90caf9", // Customize primary color
-        },
-        background: {
-            default: "#121212", // Background color
-            paper: "#1e1e1e", // Card or paper background
-        },
-        text: {
-            primary: "#ffffff", // Text color
-            secondary: "#aaaaaa",
-        },
-    },
-    typography: {
-        fontFamily: "Roboto, Arial, sans-serif",
-    },
-});
 
 const FormikFormWithMUI = ({user}) => {
     const [userExists, setUserExists] = useState(false);
@@ -76,13 +56,13 @@ const FormikFormWithMUI = ({user}) => {
     }
 
     return (
-
-        <div className="success-page">
-            <ThemeProvider theme={darkTheme}>
+        <div className="app__container">
+            <img src={logo} alt="Logo"
+                 style={{width: '8rem', marginBottom: '20px'}}/>
             <Formik
                 initialValues={{
                     name: "",
-                    gender: true,
+                    gender: 'male',
                     email: "",
                     age: "",
                     societyName: "",
@@ -92,17 +72,19 @@ const FormikFormWithMUI = ({user}) => {
                 validationSchema={validationSchema}
                 onSubmit={async (values) => {
                     try {
+                        console.log(values);
                         await addDoc(collection(db, "users"), {...values, phoneNumber: user.phoneNumber});
+                        setUserExists(true)
                     } catch (e) {
                         console.error("Error adding document: ", e);
                     }
                 }}
             >
-                {({values, errors, touched, handleChange, handleBlur}) => (
-                    <>
-                        <img src={logo} alt="Logo"
-                             style={{width: '8rem', marginBottom: '20px'}}/> {/* Add the image here */}
-                        <Box display="flex" flexDirection="column" gap={3} maxWidth={400} margin="auto">
+                {({values, errors, touched, handleChange, handleBlur, handleSubmit}) => (
+                    <form onSubmit={handleSubmit}>
+                    <Card sx={{width: '24rem', background: '#282828', borderRadius:'1rem', padding: '2rem'}}>
+
+                    <Box display="flex" flexDirection="column" gap={3} maxWidth={400}>
                             <TextField
                                 label="Name"
                                 name="name"
@@ -114,20 +96,16 @@ const FormikFormWithMUI = ({user}) => {
                                 fullWidth
                             />
 
-                            <FormLabel>Gender</FormLabel>
+                            <FormLabel style={{marginBottom: -12}}>Gender</FormLabel>
                             <RadioGroup
                                 row
                                 name="gender"
                                 value={values.gender}
-                                onChange={(e) => handleChange({
-                                    target: {
-                                        name: "gender",
-                                        value: e.target.value === "true"
-                                    }
-                                })}
+                                onChange={handleChange}
                             >
-                                <FormControlLabel color={'primary'} value={true} control={<Radio/>} label="Male"/>
-                                <FormControlLabel color={'primary'}  value={false} control={<Radio/>} label="Female"/>
+                                <FormControlLabel value="male" control={<Radio />} label="Male" sx={{ color: 'white' }} />
+                                <FormControlLabel value="female" control={<Radio />} label="Female" sx={{ color: 'white' }} />
+                                <FormControlLabel value="other" control={<Radio />} label="Other" sx={{ color: 'white' }} />
                             </RadioGroup>
 
                             <TextField
@@ -154,7 +132,7 @@ const FormikFormWithMUI = ({user}) => {
                             />
 
                             <TextField
-                                label="Society Name with Locality"
+                                label="Society name & Locality"
                                 name="societyName"
                                 value={values.societyName}
                                 onChange={handleChange}
@@ -187,14 +165,14 @@ const FormikFormWithMUI = ({user}) => {
                                 fullWidth
                             />
 
-                            <Button className='glass-button' type="submit" variant="contained" color="primary">
-                                Submit
+                            <Button type="submit" variant="contained" color="primary">
+                                Sign Up
                             </Button>
                         </Box>
-                    </>
+                    </Card>
+                    </form>
                 )}
             </Formik>
-            </ThemeProvider>
         </div>
             );
             };
