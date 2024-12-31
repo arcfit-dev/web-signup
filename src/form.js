@@ -17,8 +17,8 @@ const validationSchema = Yup.object({
     societyName: Yup.string().required("Society name is required"),
     pinCode: Yup.number().required("PIN Code is required"),
     alternatePhone: Yup.string()
-        .matches(/^\d{10}$/, "Must be a valid 10-digit phone number")
-        .required("Alternate phone number is required"),
+        .matches(/^\d{10}$/, "Must be a valid 10-digit phone number"),
+    interestedToJoin: Yup.boolean().required("This field is required"),
 });
 
 const checkUserExists = async (phoneNumber) => {
@@ -45,10 +45,9 @@ const FormikFormWithMUI = ({user}) => {
         return <div className="success-page">
             <img src={logo} alt="Logo" style={{ width: '8rem', marginBottom: '20px' }} /> {/* Add the image here */}
             <div className="success-container">
-                <h1 className="success-title">You Have Already Registered</h1>
+                <h1 className="success-title">You Swayed Successfully</h1>
                 <p className="success-description">
-                    Thank you for your interest! Our records show that you have already
-                    completed the registration process. If you have any questions or
+                    Thank you for your interest! Your details are safe with us. If you have any questions or
                     need further assistance, please feel free to contact us.
                 </p>
             </div>
@@ -68,11 +67,11 @@ const FormikFormWithMUI = ({user}) => {
                     societyName: "",
                     pinCode: "",
                     alternatePhone: "",
+                    interestedToJoin: true,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={async (values) => {
                     try {
-                        console.log(values);
                         await addDoc(collection(db, "users"), {...values, phoneNumber: user.phoneNumber});
                         setUserExists(true)
                     } catch (e) {
@@ -153,6 +152,17 @@ const FormikFormWithMUI = ({user}) => {
                                 helperText={touched.pinCode && errors.pinCode}
                                 fullWidth
                             />
+
+                        <FormLabel style={{marginBottom: -12}}>Interested to join if we open in your society?</FormLabel>
+                        <RadioGroup
+                            row
+                            name="interestedToJoin"
+                            value={values.interestedToJoin.toString()}
+                            onChange={(e) => handleChange({ target: { name: 'interestedToJoin', value: e.target.value === 'true' } })}
+                        >
+                            <FormControlLabel value="true" control={<Radio />} label="Yes" sx={{ color: 'white' }} />
+                            <FormControlLabel value="false" control={<Radio />} label="No" sx={{ color: 'white' }} />
+                        </RadioGroup>
 
                             <TextField
                                 label="Alternate Phone Number"
