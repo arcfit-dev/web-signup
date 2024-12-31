@@ -1,6 +1,7 @@
 {
   "name": "react-firebase",
   "version": "0.1.0",
+  "homepage": "https://arcfit-dev.github.io/web-signup/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
