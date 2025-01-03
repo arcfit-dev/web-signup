@@ -7,6 +7,8 @@ import MyForm from './form';
 import * as Yup from "yup";
 import {useFormik} from "formik";
 
+export const Loader = () => <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+
 const phoneValidation = Yup.object({
   phoneNumber: Yup.string()
       .matches(/^\d{10}$/, "Phone number must be exactly 10 digits")
@@ -21,6 +23,7 @@ const otpValidation = Yup.object({
 
 const App = () => {
   const [hasFilled, setHasFilled] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
   const phoneFormik = useFormik({
     initialValues: {
@@ -28,6 +31,7 @@ const App = () => {
     },
     validationSchema: phoneValidation,
     onSubmit: (values) => {
+      setLoading(true)
       const phone = `+91${values.phoneNumber}`
       generateRecaptcha();
       let appVerifier = window.recaptchaVerifier;
@@ -37,8 +41,10 @@ const App = () => {
             // user in with confirmationResult.confirm(code).
             window.confirmationResult = confirmationResult;
             setHasFilled(true);
+            setLoading(false)
           }).catch((error) => {
         // Error; SMS not sent
+        setLoading(false)
         console.log(error);
       });
     },
@@ -50,6 +56,7 @@ const App = () => {
     },
     validationSchema: otpValidation,
     onSubmit: (values) => {
+      setLoading(true)
       let otp = values.otp
       let confirmationResult = window.confirmationResult;
       confirmationResult.confirm(otp).then((result) => {
@@ -57,9 +64,11 @@ const App = () => {
         let user = result.user;
         setUser(user);
         // ...
+        setLoading(false)
       }).catch((error) => {
         // User couldn't sign in (bad verification code?)
         // ...
+        setLoading(false)
         alert('User couldn\'t sign in (bad verification code?)');
       });
     },
@@ -114,8 +123,8 @@ const App = () => {
                         helperText={phoneFormik.touched.phoneNumber && phoneFormik.errors.phoneNumber}
                         fullWidth
                     />
-                    <Button type="submit" variant="contained" color="primary" sx={{marginTop: '3rem'}} fullWidth>
-                      Send OTP
+                    <Button disabled={loading} type="submit" variant="contained" color="primary" sx={{marginTop: '3rem'}} fullWidth>
+                    {loading ? <Loader /> : "Send OTP"} 
                     </Button>
                   </form>
                 </CardContent>) : (
@@ -145,8 +154,8 @@ const App = () => {
                         helperText={otpFormik.touched.otp && otpFormik.errors.otp}
                         fullWidth
                     />
-                    <Button type="submit" variant="contained" color="primary" sx={{marginTop: '3rem'}} fullWidth>
-                      Login
+                    <Button disabled={loading} type="submit" variant="contained" color="primary" sx={{marginTop: '3rem'}} fullWidth>
+                     {loading ? <Loader /> : "Login"} 
                     </Button>
                   </form>
                 </CardContent>
