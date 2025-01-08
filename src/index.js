@@ -31,7 +31,7 @@ root.render(
       <ThemeProvider theme={darkTheme}>
       <Router>
       <Routes>
-        <Route path="/web-signup/:event?" element={<App />} />
+        <Route path="/:event?" element={<App />} />
       </Routes>
     </Router>
       </ThemeProvider>
