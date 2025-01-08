@@ -7,7 +7,7 @@ import MyForm from './form';
 import * as Yup from "yup";
 import {useFormik} from "formik";
 import RepublicDayForm from './republicDayForm';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 export const Loader = () => <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
 
@@ -27,7 +27,8 @@ const App = () => {
   const [hasFilled, setHasFilled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
-  const params = useParams();
+  const location = useLocation();
+ 
   
   const phoneFormik = useFormik({
     initialValues: {
@@ -88,7 +89,7 @@ const App = () => {
     }, auth);
   }
 
-  const showRepublic = params.event && params.event === 'republic-sway'
+  const showRepublic = location.search && location.search === '?republic-sway'
 
   if(user) {
     if(showRepublic){
