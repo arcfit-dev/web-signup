@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
@@ -28,7 +29,12 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
       <ThemeProvider theme={darkTheme}>
-       <App />
+      <Router>
+      <Routes>
+        <Route path="/republic-sway" element={<App path={'/republic-sway'}/>} />
+        <Route path="/" element={<App />} />
+      </Routes>
+    </Router>
       </ThemeProvider>
   </React.StrictMode>
 );

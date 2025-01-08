@@ -6,6 +6,8 @@ import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import MyForm from './form';
 import * as Yup from "yup";
 import {useFormik} from "formik";
+import RepublicDayForm from './republicDayForm';
+import { useLocation } from 'react-router-dom';
 
 export const Loader = () => <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
 
@@ -25,6 +27,9 @@ const App = () => {
   const [hasFilled, setHasFilled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
+  const location = useLocation();
+  const lastPath = location.pathname?.split('/').pop();
+  
   const phoneFormik = useFormik({
     initialValues: {
       phoneNumber: "",
@@ -85,6 +90,9 @@ const App = () => {
   }
 
   if(user) {
+    if(lastPath && lastPath === 'republic-sway'){
+      return <RepublicDayForm user={user} />
+    }
     return <MyForm user={user} />
   }
 
