@@ -7,7 +7,7 @@ import MyForm from './form';
 import * as Yup from "yup";
 import {useFormik} from "formik";
 import RepublicDayForm from './republicDayForm';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export const Loader = () => <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
 
@@ -27,8 +27,7 @@ const App = () => {
   const [hasFilled, setHasFilled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
-  const location = useLocation();
-  const lastPath = location.pathname?.split('/').pop();
+  const params = useParams();
   
   const phoneFormik = useFormik({
     initialValues: {
@@ -89,7 +88,7 @@ const App = () => {
     }, auth);
   }
 
-  const showRepublic = lastPath && lastPath === 'republic-sway'
+  const showRepublic = params.event && params.event === 'republic-sway'
 
   if(user) {
     if(showRepublic){
@@ -101,10 +100,15 @@ const App = () => {
   return (
       <div className='app__container'>
         <img src={logo} alt="Logo" style={{ width: '8rem', marginBottom: '20px' }} /> {/* Add the image here */}
-          {showRepublic && <Typography sx={{color: 'white'}} variant='h5'
+          {showRepublic && <><Typography sx={{color: 'white', marginBottom: "2rem", textAlign:"center"}} variant='h5'
                               component='div'>
-                    Register for Republic Sway 🇮🇳
-                  </Typography>}
+                    ArcFit's Republic Sway Bash 🇮🇳
+                  </Typography>
+                  <Typography sx={{color: 'white', marginBottom: "1rem", textAlign:"center"}} variant='p'
+                  component='div'>
+        Start free registration for Free Zumba session at Decathlon, Indirapuram Habitat Center on January 26, 2025
+      </Typography>
+                  </>}
           <Card sx={{width: '24rem', background: '#282828', borderRadius:'1rem'}}>
             {!hasFilled ? (
                 <CardContent sx={{

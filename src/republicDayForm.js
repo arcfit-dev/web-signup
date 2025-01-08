@@ -47,9 +47,9 @@ const RepublicDayForm = ({user}) => {
         return <div className="success-page">
             <img src={logo} alt="Logo" style={{ width: '8rem', marginBottom: '20px' }} /> {/* Add the image here */}
             <div className="success-container">
-                <h1 className="success-title">You Swayed Successfully</h1>
+                <h1 className="success-title">You Swayed Successfully 🇮🇳</h1>
                 <p className="success-description">
-                    You are now registered for the Republic Sway Party! See you at the session
+                    You are registered for the Republic Sway! See you at the session
                 </p>
             </div>
         </div>
