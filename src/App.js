@@ -89,8 +89,10 @@ const App = () => {
     }, auth);
   }
 
+  const showRepublic = lastPath && lastPath === 'republic-sway'
+
   if(user) {
-    if(lastPath && lastPath === 'republic-sway'){
+    if(showRepublic){
       return <RepublicDayForm user={user} />
     }
     return <MyForm user={user} />
@@ -99,6 +101,10 @@ const App = () => {
   return (
       <div className='app__container'>
         <img src={logo} alt="Logo" style={{ width: '8rem', marginBottom: '20px' }} /> {/* Add the image here */}
+          {showRepublic && <Typography sx={{color: 'white'}} variant='h5'
+                              component='div'>
+                    Register for Republic Sway 🇮🇳
+                  </Typography>}
           <Card sx={{width: '24rem', background: '#282828', borderRadius:'1rem'}}>
             {!hasFilled ? (
                 <CardContent sx={{
