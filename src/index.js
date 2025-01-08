@@ -31,8 +31,8 @@ root.render(
       <ThemeProvider theme={darkTheme}>
       <Router>
       <Routes>
-        <Route path="/republic-sway" element={<App path={'/republic-sway'}/>} />
-        <Route path="/" element={<App />} />
+        <Route path="/web-signup/republic-sway" element={<App path={'/republic-sway'}/>} />
+        <Route path="/web-signup" element={<App />} />
       </Routes>
     </Router>
       </ThemeProvider>
