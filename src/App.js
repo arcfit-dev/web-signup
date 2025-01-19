@@ -1,13 +1,14 @@
 import logo from './asset/logo.png';
 import { Button, Card, CardContent, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react'
-import { auth } from './firebase';
+import { auth, db } from './firebase';
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import MyForm from './form';
 import * as Yup from "yup";
 import {useFormik} from "formik";
 import RepublicDayForm from './republicDayForm';
 import { useLocation } from 'react-router-dom';
+import { collection, getDocs } from 'firebase/firestore';
 
 export const Loader = () => <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
 
@@ -89,6 +90,36 @@ const App = () => {
     }, auth);
   }
 
+
+  async function getCollectionAsJson(collectionName) {
+    try {
+      // Reference the Firestore collection
+      const collectionRef = collection(db, collectionName);
+  
+      // Fetch documents from the collection
+      const snapshot = await getDocs(collectionRef);
+  
+      // Convert documents to JSON format
+      const data = snapshot.docs.map(doc => ({
+        id: doc.id, // Include the document ID if needed
+        ...doc.data(),
+      }));
+  
+      // Return as JSON
+      return data; // Pretty-print JSON
+    } catch (error) {
+      console.error("Error fetching collection:", error);
+      return null;
+    }
+  }
+
+
+  const handleJSON = () => {
+    getCollectionAsJson('users').then(jsonData => {
+      console.log(jsonData);
+    });
+  }
+
   const showRepublic = location.search && location.search === '?republic-sway'
 
   if(user) {
@@ -107,7 +138,7 @@ const App = () => {
                   </Typography>
                   <Typography sx={{color: 'white', marginBottom: "1rem", textAlign:"center"}} variant='p'
                   component='div'>
-        Start free registration for Free Zumba session at Decathlon, Indirapuram Habitat Center on January 26, 2025
+        Start free registration for Free Zumba session at 7th Avenue, Gaur City
       </Typography>
                   </>}
           <Card sx={{width: '24rem', background: '#282828', borderRadius:'1rem'}}>
