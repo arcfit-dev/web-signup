@@ -14,14 +14,14 @@ const validationSchema = Yup.object({
     gender: Yup.string().oneOf(['male', 'female', 'other'], "Invalid gender").required("Gender is required"),
     email: Yup.string().email("Invalid email format").required("Email ID is required"),
     age: Yup.number().required("Age is required").min(1, "Age must be at least 1"),
-    societyName: Yup.string().required("Society name is required"),
-    pinCode: Yup.number().required("PIN Code is required"),
+    // societyName: Yup.string().required("Society name is required"),
+    // pinCode: Yup.number().required("PIN Code is required"),
     // alternatePhone: Yup.string()
     //     .matches(/^\d{10}$/, "Must be a valid 10-digit phone number"),
     // interestedToJoin: Yup.boolean().required("This field is required"),
 });
 
-const COLLECTION_ID = "republic-day-register"
+const COLLECTION_ID = "saya-gold"
 
 const checkUserExists = async (phoneNumber) => {
     const usersRef = collection(db, COLLECTION_ID);
@@ -47,9 +47,9 @@ const RepublicDayForm = ({user}) => {
         return <div className="success-page">
             <img src={logo} alt="Logo" style={{ width: '8rem', marginBottom: '20px' }} /> {/* Add the image here */}
             <div className="success-container">
-                <h1 className="success-title">You Swayed Successfully 🇮🇳</h1>
+                <h1 className="success-title">You Swayed Successfully</h1>
                 <p className="success-description">
-                    You are registered for the Republic Sway! See you at the session
+                    Your interest has been successfully recorded!
                 </p>
             </div>
         </div>
@@ -65,8 +65,8 @@ const RepublicDayForm = ({user}) => {
                     gender: 'male',
                     email: "",
                     age: "",
-                    societyName: "",
-                    pinCode: "",
+                    // societyName: "",
+                    // pinCode: "",
                     // alternatePhone: "",
                     // interestedToJoin: true,
                 }}
@@ -131,7 +131,7 @@ const RepublicDayForm = ({user}) => {
                                 fullWidth
                             />
 
-                            <TextField
+                            {/* <TextField
                                 label="Society name & Locality"
                                 name="societyName"
                                 value={values.societyName}
@@ -140,9 +140,9 @@ const RepublicDayForm = ({user}) => {
                                 error={touched.societyName && Boolean(errors.societyName)}
                                 helperText={touched.societyName && errors.societyName}
                                 fullWidth
-                            />
+                            /> */}
 
-                            <TextField
+                            {/* <TextField
                                 label="PIN Code"
                                 name="pinCode"
                                 type="number"
@@ -152,7 +152,7 @@ const RepublicDayForm = ({user}) => {
                                 error={touched.pinCode && Boolean(errors.pinCode)}
                                 helperText={touched.pinCode && errors.pinCode}
                                 fullWidth
-                            />
+                            /> */}
 
                         {/* <FormLabel style={{marginBottom: -12}}>Interested to join if we open in your society?</FormLabel>
                         <RadioGroup

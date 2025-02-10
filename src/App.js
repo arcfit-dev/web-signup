@@ -120,10 +120,10 @@ const App = () => {
     });
   }
 
-  const showRepublic = location.search && location.search === '?republic-sway'
+  const isSayaGold = location.search && location.search === '?saya-gold'
 
   if(user) {
-    if(showRepublic){
+    if(isSayaGold){
       return <RepublicDayForm user={user} />
     }
     return <MyForm user={user} />
@@ -132,13 +132,13 @@ const App = () => {
   return (
       <div className='app__container'>
         <img src={logo} alt="Logo" style={{ width: '8rem', marginBottom: '20px' }} /> {/* Add the image here */}
-          {showRepublic && <><Typography sx={{color: 'white', marginBottom: "2rem", textAlign:"center"}} variant='h5'
+          {isSayaGold && <><Typography sx={{color: 'white', marginBottom: "2rem", textAlign:"center"}} variant='h5'
                               component='div'>
-                    ArcFit's Republic Sway Bash 🇮🇳
+                    ArcFit X Saya Gold
                   </Typography>
                   <Typography sx={{color: 'white', marginBottom: "1rem", textAlign:"center"}} variant='p'
                   component='div'>
-        Start free registration for Free Zumba session at 7th Avenue, Gaur City
+        Start free registration for Free Zumba session
       </Typography>
                   </>}
           <Card sx={{width: '24rem', background: '#282828', borderRadius:'1rem'}}>
