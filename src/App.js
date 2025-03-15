@@ -169,7 +169,14 @@ const App = () => {
             variant="p"
             component="div"
           >
-            Register for free Yoga sessions, register members will get discount on ArcFit membership
+            {"Register for free Yoga session on Sunday 23rd March at 9:30 AM"}
+          </Typography>
+          <Typography
+            sx={{ color: "white", marginBottom: "1rem", textAlign: "center" }}
+            variant="p"
+            component="div"
+          >
+            {"Registered members will get discount on ArcFit membership"}
           </Typography>
         </>
       )}
