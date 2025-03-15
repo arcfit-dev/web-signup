@@ -35,7 +35,7 @@ const validationSchema = Yup.object({
   // interestedToJoin: Yup.boolean().required("This field is required"),
 });
 
-const COLLECTION_ID = "saya-gold";
+const COLLECTION_ID = "saya-yoga";
 
 const checkUserExists = async (phoneNumber) => {
   const usersRef = collection(db, COLLECTION_ID);

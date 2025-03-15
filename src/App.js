@@ -133,12 +133,12 @@ const App = () => {
   }
 
   const handleJSON = () => {
-    getCollectionAsJson("users").then((jsonData) => {
+    getCollectionAsJson("saya-gold").then((jsonData) => {
       console.log(jsonData);
     });
   };
 
-  const isSayaGold = location.search && location.search === "?saya-gold";
+  const isSayaGold = location.search && location.search === "?saya-yoga";
 
   if (user) {
     if (isSayaGold) {
@@ -169,8 +169,7 @@ const App = () => {
             variant="p"
             component="div"
           >
-            Register to avail 15% discount (flat 500 Rs off) on first month
-            membership, only applicable for registrations on 9th of March
+            Register for free Yoga sessions, register members will get discount on ArcFit membership
           </Typography>
         </>
       )}
@@ -193,6 +192,7 @@ const App = () => {
               paddingY: "3rem",
             }}
           >
+              {/* <div onClick={handleJSON}>JSON banaooo</div> */}
             <Typography sx={{ color: "white" }} variant="h5" component="div">
               Enter your phone number
             </Typography>
