@@ -138,7 +138,7 @@ const App = () => {
     });
   };
 
-  const isSayaGold = location.search && location.search === "?saya-yoga";
+  const isSayaGold = location.search && location.search === "?arc-kids";
 
   if (user) {
     if (isSayaGold) {
@@ -148,7 +148,11 @@ const App = () => {
   }
 
   return (
-    <div className="app__container">
+    <div
+      className={`app__container ${
+        isSayaGold ? "app__container--saya-gold" : ""
+      }`}
+    >
       <img
         src={logo}
         alt="Logo"
@@ -162,30 +166,30 @@ const App = () => {
             variant="h5"
             component="div"
           >
-            ArcFit X Saya Gold
+            ArcKids X Saya Gold
           </Typography>
           <Typography
             sx={{ color: "white", marginBottom: "1rem", textAlign: "center" }}
             variant="p"
             component="div"
           >
-            {"Register for free Yoga session on Sunday 23rd March at 9:30 AM"}
+            {"Register for your child to join the Summer Dance Classes"}
           </Typography>
-          <Typography
+          {/* <Typography
             sx={{ color: "white", marginBottom: "1rem", textAlign: "center" }}
             variant="p"
             component="div"
           >
-            {"Registered members will get discount on ArcFit membership"}
-          </Typography>
+            {"Registered members will get discount on ArcKids membership"}
+          </Typography> */}
         </>
       )}
       <Card
-        sx={{ 
-          width: "24rem", 
-          background: "rgba(40, 40, 40, 0.5)", 
-          borderRadius: "1rem", 
-          backdropFilter: "blur(10px)" 
+        sx={{
+          width: "24rem",
+          background: "rgba(40, 40, 40, 0.5)",
+          borderRadius: "1rem",
+          backdropFilter: "blur(10px)",
         }}
       >
         {!hasFilled ? (
@@ -199,7 +203,7 @@ const App = () => {
               paddingY: "3rem",
             }}
           >
-              {/* <div onClick={handleJSON}>JSON banaooo</div> */}
+            {/* <div onClick={handleJSON}>JSON banaooo</div> */}
             <Typography sx={{ color: "white" }} variant="h5" component="div">
               Enter your phone number
             </Typography>

@@ -18,24 +18,21 @@ import "./SuccessPage.css";
 import logo from "./asset/logo.png";
 
 const validationSchema = Yup.object({
-  name: Yup.string().required("Name is required"),
+  childName: Yup.string().required("Child's name is required"),
+  childAge: Yup.number()
+    .required("Child's age is required")
+    .min(4, "Child must be at least 4 years old")
+    .max(15, "Child must be at most 15 years old"),
   gender: Yup.string()
     .oneOf(["male", "female", "other"], "Invalid gender")
     .required("Gender is required"),
-  email: Yup.string()
+  parentName: Yup.string().required("Parent's name is required"),
+  parentEmail: Yup.string()
     .email("Invalid email format")
-    .required("Email ID is required"),
-  age: Yup.number()
-    .required("Age is required")
-    .min(1, "Age must be at least 1"),
-  // societyName: Yup.string().required("Society name is required"),
-  // pinCode: Yup.number().required("PIN Code is required"),
-  // alternatePhone: Yup.string()
-  //     .matches(/^\d{10}$/, "Must be a valid 10-digit phone number"),
-  // interestedToJoin: Yup.boolean().required("This field is required"),
+    .required("Parent's email is required"),
 });
 
-const COLLECTION_ID = "saya-yoga";
+const COLLECTION_ID = "arc-kids";
 
 const checkUserExists = async (phoneNumber) => {
   const usersRef = collection(db, COLLECTION_ID);
@@ -45,7 +42,7 @@ const checkUserExists = async (phoneNumber) => {
   return !querySnapshot.empty;
 };
 
-const RepublicDayForm = ({ user }) => {
+const KidsDanceForm = ({ user }) => {
   const [userExists, setUserExists] = useState(false);
 
   useEffect(() => {
@@ -64,12 +61,13 @@ const RepublicDayForm = ({ user }) => {
           src={logo}
           alt="Logo"
           style={{ width: "8rem", marginBottom: "20px" }}
-        />{" "}
-        {/* Add the image here */}
+        />
         <div className="success-container">
-          <h1 className="success-title">You Swayed Successfully</h1>
+          <h1 className="success-title">Registration Successful!</h1>
           <p className="success-description">
-            Your interest has been successfully recorded!
+            Thank you for registering your child for our Summer Dance Classes!
+            We will contact you shortly with the confirmation and further
+            details.
           </p>
         </div>
       </div>
@@ -77,22 +75,22 @@ const RepublicDayForm = ({ user }) => {
   }
 
   return (
-    <div className="app__container">
+    <div className="app__container app__container--saya-gold">
       <img
         src={logo}
         alt="Logo"
         style={{ width: "8rem", marginBottom: "20px" }}
       />
+      <h2 style={{ color: "white", marginBottom: "1rem" }}>
+        Summer Dance Classes Registration
+      </h2>
       <Formik
         initialValues={{
-          name: "",
+          childName: "",
+          childAge: "",
           gender: "male",
-          email: "",
-          age: "",
-          // societyName: "",
-          // pinCode: "",
-          // alternatePhone: "",
-          // interestedToJoin: true,
+          parentName: "",
+          parentEmail: "",
         }}
         validationSchema={validationSchema}
         onSubmit={async (values) => {
@@ -100,6 +98,7 @@ const RepublicDayForm = ({ user }) => {
             await addDoc(collection(db, COLLECTION_ID), {
               ...values,
               phoneNumber: user.phoneNumber,
+              registrationDate: new Date().toISOString(),
             });
             setUserExists(true);
           } catch (e) {
@@ -127,17 +126,31 @@ const RepublicDayForm = ({ user }) => {
             >
               <Box display="flex" flexDirection="column" gap={3} maxWidth={400}>
                 <TextField
-                  label="Name"
-                  name="name"
-                  value={values.name}
+                  label="Child's Name"
+                  name="childName"
+                  value={values.childName}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={touched.name && Boolean(errors.name)}
-                  helperText={touched.name && errors.name}
+                  error={touched.childName && Boolean(errors.childName)}
+                  helperText={touched.childName && errors.childName}
                   fullWidth
                 />
 
-                <FormLabel style={{ marginBottom: -12 }}>Gender</FormLabel>
+                <TextField
+                  label="Child's Age"
+                  name="childAge"
+                  type="number"
+                  value={values.childAge}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={touched.childAge && Boolean(errors.childAge)}
+                  helperText={touched.childAge && errors.childAge}
+                  fullWidth
+                />
+
+                <FormLabel style={{ marginBottom: -12 }}>
+                  Child's Gender
+                </FormLabel>
                 <RadioGroup
                   row
                   name="gender"
@@ -165,75 +178,29 @@ const RepublicDayForm = ({ user }) => {
                 </RadioGroup>
 
                 <TextField
-                  label="Email ID"
-                  name="email"
-                  value={values.email}
+                  label="Parent's Name"
+                  name="parentName"
+                  value={values.parentName}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={touched.email && Boolean(errors.email)}
-                  helperText={touched.email && errors.email}
+                  error={touched.parentName && Boolean(errors.parentName)}
+                  helperText={touched.parentName && errors.parentName}
                   fullWidth
                 />
 
                 <TextField
-                  label="Age"
-                  name="age"
-                  type="number"
-                  value={values.age}
+                  label="Parent's Email"
+                  name="parentEmail"
+                  value={values.parentEmail}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={touched.age && Boolean(errors.age)}
-                  helperText={touched.age && errors.age}
+                  error={touched.parentEmail && Boolean(errors.parentEmail)}
+                  helperText={touched.parentEmail && errors.parentEmail}
                   fullWidth
                 />
 
-                {/* <TextField
-                                label="Society name & Locality"
-                                name="societyName"
-                                value={values.societyName}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                error={touched.societyName && Boolean(errors.societyName)}
-                                helperText={touched.societyName && errors.societyName}
-                                fullWidth
-                            /> */}
-
-                {/* <TextField
-                                label="PIN Code"
-                                name="pinCode"
-                                type="number"
-                                value={values.pinCode}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                error={touched.pinCode && Boolean(errors.pinCode)}
-                                helperText={touched.pinCode && errors.pinCode}
-                                fullWidth
-                            /> */}
-
-                {/* <FormLabel style={{marginBottom: -12}}>Interested to join if we open in your society?</FormLabel>
-                        <RadioGroup
-                            row
-                            name="interestedToJoin"
-                            value={values.interestedToJoin.toString()}
-                            onChange={(e) => handleChange({ target: { name: 'interestedToJoin', value: e.target.value === 'true' } })}
-                        >
-                            <FormControlLabel value="true" control={<Radio />} label="Yes" sx={{ color: 'white' }} />
-                            <FormControlLabel value="false" control={<Radio />} label="No" sx={{ color: 'white' }} />
-                        </RadioGroup> */}
-
-                {/* <TextField
-                                label="Alternate Phone Number"
-                                name="alternatePhone"
-                                value={values.alternatePhone}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                error={touched.alternatePhone && Boolean(errors.alternatePhone)}
-                                helperText={touched.alternatePhone && errors.alternatePhone}
-                                fullWidth
-                            /> */}
-
                 <Button type="submit" variant="contained" color="primary">
-                  Sign Up
+                  Register Now
                 </Button>
               </Box>
             </Card>
@@ -244,4 +211,4 @@ const RepublicDayForm = ({ user }) => {
   );
 };
 
-export default RepublicDayForm;
+export default KidsDanceForm;
