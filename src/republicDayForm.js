@@ -22,7 +22,7 @@ const validationSchema = Yup.object({
   childAge: Yup.number()
     .required("Child's age is required")
     .min(4, "Child must be at least 4 years old")
-    .max(15, "Child must be at most 15 years old"),
+    .max(16, "Child must be at most 16 years old"),
   gender: Yup.string()
     .oneOf(["male", "female", "other"], "Invalid gender")
     .required("Gender is required"),
