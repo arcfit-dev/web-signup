@@ -15,6 +15,7 @@ import logo from "./asset/logo.png";
 import { auth, db } from "./firebase";
 import MyForm from "./form";
 import RepublicDayForm from "./republicDayForm";
+import YogaDayForm from "./YogaDayForm";
 
 export const Loader = () => (
   <div class="lds-ring">
@@ -139,8 +140,12 @@ const App = () => {
   };
 
   const isSayaGold = location.search && location.search === "?arc-kids";
+  const isYogaDay = location.search && location.search === "?yoga-day";
 
   if (user) {
+    if (isYogaDay) {
+      return <YogaDayForm user={user} />;
+    }
     if (isSayaGold) {
       return <RepublicDayForm user={user} />;
     }
@@ -150,7 +155,7 @@ const App = () => {
   return (
     <div
       className={`app__container ${
-        isSayaGold ? "app__container--saya-gold" : ""
+        isSayaGold ? "app__container--saya-gold" : isYogaDay ? "app__container--yoga-day" : ""
       }`}
     >
       <img
