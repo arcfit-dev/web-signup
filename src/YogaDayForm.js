@@ -30,7 +30,7 @@ const validationSchema = Yup.object({
     .required("Email is required"),
 });
 
-const COLLECTION_ID = "yoga-day-registrations";
+const COLLECTION_ID = "pilates-session-registrations";
 
 const checkUserExists = async (phoneNumber) => {
   const usersRef = collection(db, COLLECTION_ID);
@@ -39,7 +39,7 @@ const checkUserExists = async (phoneNumber) => {
   return !querySnapshot.empty;
 };
 
-const YogaDayForm = ({ user }) => {
+const PilatesSessionForm = ({ user }) => {
   const [userExists, setUserExists] = useState(false);
 
   useEffect(() => {
@@ -62,9 +62,9 @@ const YogaDayForm = ({ user }) => {
         <div className="success-container">
           <h1 className="success-title">Registration Successful!</h1>
           <p className="success-description">
-            Thank you for registering for International Yoga Day celebration!
+            Thank you for registering for the Free Pilates Session on June 29th!
             We will contact you shortly with the confirmation and further
-            details.
+            details. The session will be held in Hall 1 from 9AM to 10AM.
           </p>
         </div>
       </div>
@@ -79,8 +79,12 @@ const YogaDayForm = ({ user }) => {
         style={{ width: "8rem", marginBottom: "20px" }}
       />
       <h2 style={{ color: "white", marginBottom: "1rem" }}>
-        International Yoga Day Registration
+        Free Pilates Session Registration
       </h2>
+      <p style={{ color: "white", marginBottom: "2rem", textAlign: "center" }}>
+        Join us for a free Pilates session on June 29th, 2024<br />
+        <strong>Hall 1 • 9:00 AM - 10:00 AM</strong>
+      </p>
       <Formik
         initialValues={{
           name: "",
@@ -183,7 +187,7 @@ const YogaDayForm = ({ user }) => {
                 />
 
                 <Button type="submit" variant="contained" color="primary">
-                  Register Now
+                  Register for Free Session
                 </Button>
               </Box>
             </Card>
@@ -194,4 +198,4 @@ const YogaDayForm = ({ user }) => {
   );
 };
 
-export default YogaDayForm; 
+export default PilatesSessionForm; 

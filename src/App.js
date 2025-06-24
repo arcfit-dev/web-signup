@@ -14,8 +14,8 @@ import * as Yup from "yup";
 import logo from "./asset/logo.png";
 import { auth, db } from "./firebase";
 import MyForm from "./form";
+import PilatesSessionForm from "./PilatesSessionForm";
 import RepublicDayForm from "./republicDayForm";
-import YogaDayForm from "./YogaDayForm";
 
 export const Loader = () => (
   <div class="lds-ring">
@@ -134,17 +134,17 @@ const App = () => {
   }
 
   const handleJSON = () => {
-    getCollectionAsJson("saya-gold").then((jsonData) => {
+    getCollectionAsJson("pilates-session-registrations").then((jsonData) => {
       console.log(jsonData);
     });
   };
 
   const isSayaGold = location.search && location.search === "?arc-kids";
-  const isYogaDay = location.search && location.search === "?yoga-day";
+  const isYogaDay = location.search && location.search === "?free-pilates-session";
 
   if (user) {
     if (isYogaDay) {
-      return <YogaDayForm user={user} />;
+      return <PilatesSessionForm user={user} />;
     }
     if (isSayaGold) {
       return <RepublicDayForm user={user} />;
@@ -154,9 +154,7 @@ const App = () => {
 
   return (
     <div
-      className={`app__container ${
-        isSayaGold ? "app__container--saya-gold" : isYogaDay ? "app__container--yoga-day" : ""
-      }`}
+      className={`app__container`}
     >
       <img
         src={logo}
@@ -208,7 +206,7 @@ const App = () => {
               paddingY: "3rem",
             }}
           >
-            {/* <div onClick={handleJSON}>JSON banaooo</div> */}
+           {/* <div onClick={handleJSON}>JSON banaooo</div> */}
             <Typography sx={{ color: "white" }} variant="h5" component="div">
               Enter your phone number
             </Typography>

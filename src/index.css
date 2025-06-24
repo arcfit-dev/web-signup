@@ -24,16 +24,6 @@ body {
   overflow: auto;
 }
 
-  .app__container--saya-gold {
-    background: center / cover no-repeat url("asset/arc-kids.png");
-    opacity: .6;
-  }
-
-.app__container--yoga-day {
-  background: center / cover no-repeat url("asset/yoga-day.png");
-  opacity: .6;
-}
-
 .glass-button {
   display: inline-block;
   padding: 24px 32px;
