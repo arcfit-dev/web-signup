@@ -11,6 +11,7 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import * as Yup from "yup";
+import AmrapaliPlatinumForm from "./AmrapaliPlatinumForm";
 import logo from "./asset/logo.png";
 import { auth, db } from "./firebase";
 import MyForm from "./form";
@@ -138,9 +139,10 @@ const App = () => {
       console.log(jsonData);
     });
   };
-
+  
   const isSayaGold = location.search && location.search === "?arc-kids";
   const isYogaDay = location.search && location.search === "?free-pilates-session";
+  const isAmrapaliPlatinum = location.search && location.search === "?amrapali-platinum";
 
   if (user) {
     if (isYogaDay) {
@@ -148,6 +150,9 @@ const App = () => {
     }
     if (isSayaGold) {
       return <RepublicDayForm user={user} />;
+    }
+    if (isAmrapaliPlatinum) {
+      return <AmrapaliPlatinumForm user={user} />;
     }
     return <MyForm user={user} />;
   }
@@ -185,6 +190,24 @@ const App = () => {
           >
             {"Registered members will get discount on ArcKids membership"}
           </Typography> */}
+        </>
+      )}
+      {isAmrapaliPlatinum && (
+        <>
+          <Typography
+            sx={{ color: "white", marginBottom: "2rem", textAlign: "center" }}
+            variant="h5"
+            component="div"
+          >
+            Amrapali Platinum
+          </Typography>
+          <Typography
+            sx={{ color: "white", marginBottom: "1rem", textAlign: "center" }}
+            variant="p"
+            component="div"
+          >
+            {"Register for exclusive Amrapali Platinum membership"}
+          </Typography>
         </>
       )}
       <Card
