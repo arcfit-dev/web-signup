@@ -12,11 +12,13 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import * as Yup from "yup";
 import AmrapaliPlatinumForm from "./AmrapaliPlatinumForm";
+import ApexKremlinForm from "./ApexKremlinForm";
 import logo from "./asset/logo.png";
 import { auth, db } from "./firebase";
 import MyForm from "./form";
 import PilatesSessionForm from "./PilatesSessionForm";
 import RepublicDayForm from "./republicDayForm";
+import WindsorParkForm from "./WindsorParkForm";
 
 export const Loader = () => (
   <div class="lds-ring">
@@ -143,6 +145,8 @@ const App = () => {
   const isSayaGold = location.search && location.search === "?arc-kids";
   const isYogaDay = location.search && location.search === "?free-pilates-session";
   const isAmrapaliPlatinum = location.search && location.search === "?amrapali-platinum";
+  const isWindsorPark = location.search && location.search === "?windsor-park";
+  const isApexKremlin = location.search && location.search === "?apex-kremlin";
 
   if (user) {
     if (isYogaDay) {
@@ -153,6 +157,12 @@ const App = () => {
     }
     if (isAmrapaliPlatinum) {
       return <AmrapaliPlatinumForm user={user} />;
+    }
+    if (isWindsorPark) {
+      return <WindsorParkForm user={user} />;
+    }
+    if (isApexKremlin) {
+      return <ApexKremlinForm user={user} />;
     }
     return <MyForm user={user} />;
   }
@@ -207,6 +217,42 @@ const App = () => {
             component="div"
           >
             {"Register for exclusive Amrapali Platinum membership"}
+          </Typography>
+        </>
+      )}
+      {isWindsorPark && (
+        <>
+          <Typography
+            sx={{ color: "white", marginBottom: "2rem", textAlign: "center" }}
+            variant="h5"
+            component="div"
+          >
+            Windsor Park, Indirapuram
+          </Typography>
+          <Typography
+            sx={{ color: "white", marginBottom: "1rem", textAlign: "center" }}
+            variant="p"
+            component="div"
+          >
+            {"Register for exclusive Windsor Park membership"}
+          </Typography>
+        </>
+      )}
+      {isApexKremlin && (
+        <>
+          <Typography
+            sx={{ color: "white", marginBottom: "2rem", textAlign: "center" }}
+            variant="h5"
+            component="div"
+          >
+            Apex Kremlin, Siddharth Vihar
+          </Typography>
+          <Typography
+            sx={{ color: "white", marginBottom: "1rem", textAlign: "center" }}
+            variant="p"
+            component="div"
+          >
+            {"Register for exclusive Apex Kremlin membership"}
           </Typography>
         </>
       )}
